@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/sidebar';
 import { Home, LineChart, DollarSign } from 'lucide-react';
 import logoUdc from '@/assets/img/logo-udc.png';
+import { Link } from 'react-router-dom';
 
 export function AppSidebar({
   ...props
@@ -35,28 +36,28 @@ export function AppSidebar({
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="/dashboard">
+                  <Link to="/">
                     <Home className="mr-2" />
                     Dashboard
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
 
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="/pronostico">
+                  <Link to="/pronostico">
                     <LineChart className="mr-2" />
                     Pronóstico
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
 
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="/consumo">
+                  <Link to="/consumo">
                     <DollarSign className="mr-2" />
                     Consumo
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>

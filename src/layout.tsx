@@ -9,7 +9,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <SidebarProvider>
       <AppSidebar />
       <main className="flex-1 p-6">
-        <div className="flex-1 flex justify-between">
+        <div className="flex-1 flex justify-between mb-3">
           <SidebarTrigger />
           <div className="flex items-center gap-8">
             <Bell />

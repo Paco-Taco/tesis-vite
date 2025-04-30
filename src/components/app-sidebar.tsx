@@ -12,13 +12,16 @@ import {
 } from '@/components/ui/sidebar';
 import { Home, LineChart, DollarSign } from 'lucide-react';
 import logoUdc from '@/assets/img/logo-udc.png';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export function AppSidebar({
   ...props
 }: {
   props?: React.ComponentProps<typeof Sidebar>;
 }) {
+  const location = useLocation();
+  const currentPath = location.pathname;
+
   return (
     <Sidebar {...props} collapsible="offcanvas">
       <SidebarHeader>
@@ -35,7 +38,7 @@ export function AppSidebar({
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton asChild isActive={currentPath === '/'}>
                   <Link to="/">
                     <Home className="mr-2" />
                     Dashboard
@@ -44,7 +47,10 @@ export function AppSidebar({
               </SidebarMenuItem>
 
               <SidebarMenuItem>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton
+                  asChild
+                  isActive={currentPath === '/pronostico'}
+                >
                   <Link to="/pronostico">
                     <LineChart className="mr-2" />
                     Pronóstico
@@ -53,7 +59,10 @@ export function AppSidebar({
               </SidebarMenuItem>
 
               <SidebarMenuItem>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton
+                  asChild
+                  isActive={currentPath === '/consumo'}
+                >
                   <Link to="/consumo">
                     <DollarSign className="mr-2" />
                     Consumo

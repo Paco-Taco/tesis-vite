@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
+import { Select, SelectTrigger } from '@/components/ui/select';
+import { SelectContent, SelectItem, SelectValue } from '@radix-ui/react-select';
 import { useState } from 'react';
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 
@@ -24,6 +25,21 @@ export const MainDashboard = () => {
       changeColor: 'text-red-500',
     },
   ]);
+
+  const selectItems = [
+    {
+      label: 'Doméstica A',
+      value: 'DA',
+    },
+    {
+      label: 'Doméstica B',
+      value: 'DB',
+    },
+    {
+      label: 'Empresarial',
+      value: 'EM',
+    },
+  ];
 
   return (
     <div className="space-y-6">
@@ -54,13 +70,11 @@ export const MainDashboard = () => {
               <CardTitle>Gasto Actual</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-grow justify-center items-center py-6">
-              <div className="relative w-40 h-40">
-                <Progress value={70} className="w-full h-full rounded-full" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-2xl font-bold text-primary">
-                    $256.54
-                  </span>
-                </div>
+              <div className="flex flex-col w-70 h-70 border-[14px] p-2 border-green-600 rounded-full items-center justify-center">
+                <span className="text-lg font-regular text-gray-500">
+                  Total
+                </span>
+                <span className="text-2xl font-bold text-primary">$256.54</span>
               </div>
             </CardContent>
           </Card>
@@ -71,9 +85,18 @@ export const MainDashboard = () => {
           <Card>
             <CardHeader className="flex flex-row justify-between items-center">
               <CardTitle>Tarifa</CardTitle>
-              <select className="border border-muted rounded-md px-3 py-1 text-sm focus:outline-none">
-                <option>Doméstico A</option>
-              </select>
+              <Select>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Doméstica A" />
+                </SelectTrigger>
+                <SelectContent>
+                  {selectItems.map((item, index) => (
+                    <SelectItem key={index} value={item.value}>
+                      {item.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </CardHeader>
             <CardContent className="pt-2">
               <ResponsiveContainer width="100%" height={350}>

@@ -4,7 +4,7 @@
 
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
     --font-poppins: "Poppins", sans-serif;
@@ -150,4 +150,19 @@ html, body, #root {
         --chart-4: 280 65% 60%;
         --chart-5: 340 75% 55%;
       } */
+}
+
+/* Accessibility stuff */
+.a11y-large-text {
+  font-size: 1.25rem !important;
+}
+
+.a11y-high-contrast {
+  filter: contrast(450%);
+  /* background-color: #000 !important; */
+  /* color: #fff !important; */
+}
+
+.a11y-letter-spacing * {
+  letter-spacing: 0.08em !important;
 }

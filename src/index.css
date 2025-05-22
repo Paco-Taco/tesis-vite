@@ -157,11 +157,41 @@ html, body, #root {
   font-size: 1.25rem !important;
 }
 
-.a11y-high-contrast {
+/* .a11y-high-contrast body {
   filter: contrast(450%);
-  /* background-color: #000 !important; */
-  /* color: #fff !important; */
+} */
+
+.a11y-high-contrast {
+  --bg-color: #000000;
+  --text-color: #ffffff;
+  --primary-color: #ffff00;
+  --button-text: #000000;
+  --link-color: #00ffff;
+  --focus-outline: 3px dashed #ff00ff;
 }
+
+.a11y-high-contrast body {
+  background-color: var(--bg-color) !important;
+  color: var(--text-color) !important;
+}
+
+.a11y-high-contrast a {
+  color: var(--link-color) !important;
+  text-decoration: underline;
+}
+
+.a11y-high-contrast button,
+.a11y-high-contrast [role="button"] {
+  background-color: var(--primary-color) !important;
+  color: var(--button-text) !important;
+  border: 2px solid var(--text-color) !important;
+}
+
+.a11y-high-contrast *:focus {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
+}
+
 
 .a11y-letter-spacing * {
   letter-spacing: 0.08em !important;

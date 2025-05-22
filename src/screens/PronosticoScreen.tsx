@@ -3,7 +3,7 @@ import { StatCard } from '@/components/home/StatCard';
 import { TarifaChart } from '@/components/home/TarifaChart';
 import { useState } from 'react';
 
-export const MainDashboard = () => {
+export const PronosticoScreen = () => {
   const [statCardsData, setStatCardsData] = useState([
     {
       label: 'Agua consumida hoy',

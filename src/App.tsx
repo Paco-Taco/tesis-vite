@@ -1,6 +1,8 @@
 import Layout from './layout';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { MainDashboard } from './screens/MainDashboard';
+import { PronosticoScreen } from './screens/PronosticoScreen';
+import { ConsumoScreen } from './screens/ConsumoScreen';
 
 function App() {
   return (
@@ -8,8 +10,8 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<MainDashboard />} />
-          <Route path="/pronostico" element={<h1>Pronostico</h1>} />
-          <Route path="/consumo" element={<h1>Consumo</h1>} />
+          <Route path="/pronostico" element={<PronosticoScreen />} />
+          <Route path="/consumo" element={<ConsumoScreen />} />
         </Routes>
       </Layout>
     </BrowserRouter>

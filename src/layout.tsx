@@ -5,6 +5,7 @@ import { SidebarProvider, SidebarTrigger } from './components/ui/sidebar';
 import { Settings, Bell } from 'lucide-react';
 import { AccessibilityProvider } from './context/accessibilityContext';
 import { AccessibilityTab } from './components/shared/AccessibilityTab';
+import { SettingsDialog } from './components/navbar/SettingsDialog';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -14,9 +15,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <main className="flex-1 p-6 dark:bg-black">
           <div className="flex-1 flex justify-between mb-3">
             <SidebarTrigger />
-            <div className="flex items-center gap-8">
-              <Bell />
-              <Settings />
+            <div className="flex items-center gap-6">
+              <SettingsDialog />
+              <div className="hover:bg-gray-100 hover:dark:bg-neutral-900 rounded-3xl p-2">
+                <Bell />
+              </div>
               <Avatar>
                 <AvatarImage src="https://github.com/shadcn.png" />
                 <AvatarFallback>UC</AvatarFallback>

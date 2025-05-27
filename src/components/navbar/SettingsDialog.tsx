@@ -1,5 +1,6 @@
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -88,7 +89,9 @@ export const SettingsDialog = () => {
         </div>
 
         <DialogFooter>
-          <Button>Guardar Cambios</Button>
+          <DialogClose>
+            <Button>Guardar Cambios</Button>
+          </DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -1,6 +1,5 @@
 // components/ui/accessibility-context.tsx
 import { createContext, useContext, useState, useEffect } from 'react';
-import { useTheme } from '@/hooks/useTheme';
 
 interface AccessibilityContextType {
   largeText: boolean;
@@ -25,14 +24,33 @@ export const AccessibilityProvider = ({
   const [largeText, setLargeText] = useState(false);
   const [highContrast, setHighContrast] = useState(false);
   const [letterSpacing, setLetterSpacing] = useState(false);
-  const { isDark, toggleTheme } = useTheme();
+
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('theme') === 'dark';
+    }
+    return false;
+  });
 
   useEffect(() => {
-    const root = document.documentElement; // esto apunta al <html>
+    const root = document.documentElement;
+    if (isDark) {
+      root.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      root.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDark]);
+
+  useEffect(() => {
+    const root = document.documentElement;
     root.classList.toggle('a11y-large-text', largeText);
     document.body.classList.toggle('a11y-high-contrast', highContrast);
     document.body.classList.toggle('a11y-letter-spacing', letterSpacing);
   }, [largeText, highContrast, letterSpacing]);
+
+  const toggleTheme = () => setIsDark((prev) => !prev);
 
   return (
     <AccessibilityContext.Provider

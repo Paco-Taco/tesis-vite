@@ -5,8 +5,12 @@ import { GastoActual } from '@/components/home/GastoActual';
 import { StatCard } from '@/components/home/StatCard';
 import { ConsumoDiario } from '@/types/consumoTypes';
 import { ChartCard } from '@/components/shared/ChartCard';
+import { useTheme } from '@/hooks/useTheme';
+import { useAccessibility } from '@/context/accessibilityContext';
 
 export const MainDashboard = () => {
+  const { isDark } = useAccessibility();
+
   const [consumoDelDia, setConsumoDelDia] = useState<ConsumoDiario | null>(
     null
   );
@@ -61,6 +65,13 @@ export const MainDashboard = () => {
       console.log('🔌 Desconectado del WebSocket');
     };
   }, []);
+
+  const [isDarkMode, setIsDarkMode] = useState(isDark);
+
+  useEffect(() => {
+    setIsDarkMode(isDark);
+    console.log(isDark);
+  }, [isDark]);
 
   const statCardsData = [
     {
@@ -131,17 +142,23 @@ export const MainDashboard = () => {
                     y: dataGraph.y,
                     type: 'scatter',
                     mode: 'lines+markers',
-                    marker: { color: 'blue' },
+                    marker: { color: '#193cb8' },
                     name: 'Consumo',
                   },
                 ]}
                 layout={{
                   title: 'Consumo de Agua en Tiempo Real (últimos 5)',
-                  xaxis: { title: 'Hora' },
-                  yaxis: { title: 'Lectura (m³)' },
+                  xaxis: { title: 'Hora', color: isDarkMode ? '#fff' : '#000' },
+                  yaxis: {
+                    title: 'Lectura (m³)',
+                    color: isDarkMode ? '#fff' : '#000',
+                  },
                   autosize: true,
+                  paper_bgcolor: isDarkMode ? '#171717' : '#fff',
+                  plot_bgcolor: isDarkMode ? '#171717' : '#fff',
+                  font: { color: isDarkMode ? '#fff' : '#000' },
                 }}
-                style={{ width: '100%' }}
+                style={{ width: '100%', height: '100%' }}
               />
             </ChartCard>
           ) : (

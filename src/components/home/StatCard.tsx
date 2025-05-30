@@ -3,7 +3,7 @@ import { CardContent } from '@/components/ui/card';
 
 interface StatCardProps {
   label: string;
-  value: string;
+  value: string | number;
   variation: string;
   variationColor: string;
 }

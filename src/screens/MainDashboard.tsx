@@ -5,7 +5,6 @@ import { GastoActual } from '@/components/home/GastoActual';
 import { StatCard } from '@/components/home/StatCard';
 import { ConsumoDiario } from '@/types/consumoTypes';
 import { ChartCard } from '@/components/shared/ChartCard';
-import { useTheme } from '@/hooks/useTheme';
 import { useAccessibility } from '@/context/accessibilityContext';
 
 export const MainDashboard = () => {

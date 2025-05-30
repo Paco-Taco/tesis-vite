@@ -2,6 +2,11 @@ export const calcularTotalAPagar = (consumo, tarifaCode, rangos, precios) => {
   const bloques = rangos[tarifaCode];
   const preciosPorBloque = precios[tarifaCode];
 
+  if (!Array.isArray(bloques) || !Array.isArray(preciosPorBloque)) {
+    console.warn(`Datos faltantes para la tarifa: ${tarifaCode}`);
+    return 0; // o cualquier valor por defecto
+  }
+
   let restante = consumo;
   let total = 0;
 

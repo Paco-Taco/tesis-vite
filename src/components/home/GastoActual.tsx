@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { calcularTotalAPagar } from '@/example/CalcularTotalAPagar';
 import { getColorPorRango } from '@/example/calculosConsumo';
 import { precios, tarifas } from '@/example/tarifas';
+import { useTarifaStore } from '@/store/useTarifaStore';
 import { ConsumoDiario } from '@/types/consumoTypes';
 
 interface GastoActualTypes {
@@ -9,14 +10,20 @@ interface GastoActualTypes {
 }
 
 export const GastoActual = ({ consumoDelDia }: GastoActualTypes) => {
+  const { currentTarifa } = useTarifaStore();
+
   const gastoAcumulado = calcularTotalAPagar(
     consumoDelDia?.lectura,
-    'DA', // recuerda mandar tarifa dinamicamente
+    currentTarifa, // recuerda mandar tarifa dinamicamente
     tarifas,
     precios
   );
 
-  const colorCirculo = getColorPorRango(consumoDelDia?.lectura, 'DA', tarifas);
+  const colorCirculo = getColorPorRango(
+    consumoDelDia?.lectura,
+    currentTarifa,
+    tarifas
+  );
 
   return (
     <Card className="flex flex-col h-full">

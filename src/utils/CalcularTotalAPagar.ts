@@ -1,4 +1,11 @@
-export const calcularTotalAPagar = (consumo, tarifaCode, rangos, precios) => {
+import { Tarifa } from '@/store/useTarifaStore';
+
+export const calcularTotalAPagar = (
+  consumo: number,
+  tarifaCode: Tarifa,
+  rangos: any,
+  precios: any
+) => {
   const bloques = rangos[tarifaCode];
   const preciosPorBloque = precios[tarifaCode];
 

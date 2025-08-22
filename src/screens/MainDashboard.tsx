@@ -6,6 +6,7 @@ import { StatCard } from '@/components/home/StatCard';
 import { ConsumoDiario } from '@/types/consumoTypes';
 import { ChartCard } from '@/components/shared/ChartCard';
 import { useAccessibility } from '@/context/accessibilityContext';
+import { ScreenTitle } from '../components/shared/ScreenTitle';
 
 export const MainDashboard = () => {
   const { isDark } = useAccessibility();
@@ -110,10 +111,7 @@ export const MainDashboard = () => {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-regular">
-        Bienvenido,{' '}
-        <span className="font-semibold text-primary">Francisco 👋</span>
-      </h1>
+      <ScreenTitle label="Bienvenido, Francisco 👋" />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {statCardsData.map((item, index) => (

@@ -1,7 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { calcularTotalAPagar } from '@/example/CalcularTotalAPagar';
-import { getColorPorRango } from '@/example/calculosConsumo';
-import { precios, tarifas } from '@/example/tarifas';
+import { calcularTotalAPagar } from '@/utils/CalcularTotalAPagar';
+// @ts-ignore
+import { getColorPorRango } from '@/utils/calculosConsumo';
+import { precios, tarifas } from '@/utils/tarifas';
 import { useTarifaStore } from '@/store/useTarifaStore';
 import { ConsumoDiario } from '@/types/consumoTypes';
 
@@ -13,7 +14,7 @@ export const GastoActual = ({ consumoDelDia }: GastoActualTypes) => {
   const { currentTarifa } = useTarifaStore();
 
   const gastoAcumulado = calcularTotalAPagar(
-    consumoDelDia?.lectura,
+    consumoDelDia?.lectura ?? 0,
     currentTarifa, // recuerda mandar tarifa dinamicamente
     tarifas,
     precios

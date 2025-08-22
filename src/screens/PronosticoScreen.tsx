@@ -1,8 +1,6 @@
 import { GastoAproximado } from '@/components/forecast/GastoAproximado';
 import { TarifaFuturaChart } from '@/components/forecast/TarifaFuturaChart';
-import { GastoActual } from '@/components/home/GastoActual';
 import { StatCard } from '@/components/home/StatCard';
-import { TarifaChart } from '@/components/home/TarifaChart';
 import { useState } from 'react';
 
 export const PronosticoScreen = () => {

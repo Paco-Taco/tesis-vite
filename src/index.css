@@ -92,6 +92,8 @@ html, body, #root {
     --sidebar-accent-foreground: oklch(0.64 0.144 160.62);
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.708 0 0);
+    --consumo: oklch(54.107% 0.08561 229.798);
+    --cumulado: oklch(44.988% 0.13134 262.436);
 }
 
 .dark {

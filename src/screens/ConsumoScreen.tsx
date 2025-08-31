@@ -26,21 +26,10 @@ import {
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { toISODate } from '@/utils/toISODate';
 import { StatCard } from '@/components/shared/StatCard';
-
-type TodayPoint = {
-  _id: string;
-  fecha: string; // "YYYY-MM-DD"
-  hora: string; // "HH:mm"
-  lectura: number; // cumulative reading
-  createdAt: string;
-  __v: number;
-};
-
-interface TodaysConsumptionResponse {
-  mensaje: string;
-  total: number;
-  datos: TodayPoint[];
-}
+import {
+  MonthlyConsumptionResponse,
+  TodaysConsumptionResponse,
+} from '@/infraestructure/interfaces/consumption.interfaces';
 
 type MonthlyDay = {
   _id: string;
@@ -50,14 +39,6 @@ type MonthlyDay = {
   picoConsumo: number; // instantaneous peak
   totalDia: number; // actual daily consumption
 };
-
-interface MonthlyConsumptionResponse {
-  mensaje: string;
-  datos: {
-    consumoTotal: number;
-    datos: MonthlyDay[];
-  };
-}
 
 function formatUnit(n: number) {
   return `${(n ?? 0).toFixed(2)} m³`;
@@ -107,6 +88,7 @@ export const ConsumoScreen: React.FC = () => {
   const [monthData, setMonthData] = useState<MonthlyConsumptionResponse | null>(
     null
   );
+
   const [loadingToday, setLoadingToday] = useState(false);
   const [loadingMonth, setLoadingMonth] = useState(false);
   const [errorToday, setErrorToday] = useState<string | null>(null);

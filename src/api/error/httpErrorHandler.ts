@@ -40,7 +40,7 @@ export const httpErrorHandler = (error: AxiosError) => {
       console.error(`Error ${status} en endpoint: ${endpoint}`);
       console.log('Detalles del error:', errorData);
 
-      if (status === 401) return Promise.reject(error);
+      if (status === 401) return Promise.reject(errorData);
 
       if (status === 409) return throwServerMessage(error);
 

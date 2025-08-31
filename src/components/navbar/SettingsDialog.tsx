@@ -13,6 +13,17 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Input } from '../ui/input';
 import { Tarifa, useTarifaStore } from '@/store/useTarifaStore';
 import { useAuth } from '@/context/authContext';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '../ui/alert-dialog';
 
 export const SettingsDialog = () => {
   const { setCurrentTarifa, currentTarifa } = useTarifaStore();
@@ -96,19 +107,40 @@ export const SettingsDialog = () => {
           className="flex w-full"
           style={{ justifyContent: 'space-between' }}
         >
-          {/* ✅ Logout button */}
-          <Button
-            variant="destructive"
-            onClick={async () => {
-              await signOut();
-            }}
-            disabled={loading}
-            className="gap-2"
-          >
-            <LogOut className="h-4 w-4" />
-            Cerrar sesión
-          </Button>
-
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              {/* ✅ Logout button */}
+              <Button
+                variant="destructive"
+                disabled={loading}
+                className="gap-2"
+              >
+                <LogOut className="h-4 w-4" />
+                Cerrar sesión
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>
+                  ¿Seguro que deseas cerrar sesión?
+                </AlertDialogTitle>
+                <AlertDialogDescription>
+                  Tendrás que volver a ingresar tus credenciales para acceder a
+                  la información proporcionada
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={async () => {
+                    await signOut();
+                  }}
+                >
+                  Cerrar Sesión
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
           <DialogClose asChild>
             <Button variant="secondary">Aceptar</Button>
           </DialogClose>

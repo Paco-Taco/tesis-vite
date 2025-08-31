@@ -7,14 +7,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Settings } from 'lucide-react';
+import { Settings, LogOut } from 'lucide-react'; // ✅ NEW
 import { Button } from '../ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Input } from '../ui/input';
 import { Tarifa, useTarifaStore } from '@/store/useTarifaStore';
+import { useAuth } from '@/context/authContext';
 
 export const SettingsDialog = () => {
   const { setCurrentTarifa, currentTarifa } = useTarifaStore();
+  const { user, signOut, loading } = useAuth(); // ✅ NEW
 
   const tariffs = [
     { label: 'Doméstica Zona Rural', value: 'R' },
@@ -26,6 +28,17 @@ export const SettingsDialog = () => {
     { label: 'Industrial', value: 'I' },
   ];
 
+  const userInfo = [
+    {
+      label: 'Nombre de usuario',
+      value: user?.username ?? '',
+    },
+    {
+      label: 'Correo electrónico',
+      value: user?.correo_institucional ?? '',
+    },
+  ];
+
   return (
     <Dialog>
       <DialogTrigger>
@@ -33,10 +46,12 @@ export const SettingsDialog = () => {
           <Settings />
         </div>
       </DialogTrigger>
+
       <DialogContent className="min-w-[80%]">
         <div className="grid grid-cols-1 items-center gap-5">
           <DialogTitle>Ajustes</DialogTitle>
           <DialogDescription>Tarifa actual: {currentTarifa}</DialogDescription>
+
           <div className="relative">
             <div className="flex gap-2 overflow-x-auto no-scrollbar rounded-md">
               {tariffs.map((item) => (
@@ -56,28 +71,46 @@ export const SettingsDialog = () => {
             </div>
           </div>
 
+          {/* Avatar (optional)
           <div className="flex gap-4 items-center">
             <Avatar className="w-12 h-12">
-              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarImage
+                src={user?.imageUrl ?? 'https://github.com/shadcn.png'}
+              />
               <AvatarFallback>UC</AvatarFallback>
             </Avatar>
-            <span className="underline cursor-pointer">Editar Avatar</span>
           </div>
-          <div className="flex flex-col gap-2">
-            <DialogDescription>Email</DialogDescription>
-            <Input
-              type="email"
-              placeholder="Email"
-              className="h-12"
-              disabled={true}
-              value="frodriguez25@ucol.mx"
-            />
+          */}
+
+          <div className="flex flex-col">
+            {userInfo.map(({ label, value }) => (
+              <div className="mb-8" key={label}>
+                <DialogDescription>{label}</DialogDescription>
+                <Input type="text" className="h-12" disabled value={value} />
+              </div>
+            ))}
           </div>
         </div>
 
-        <DialogFooter>
-          <DialogClose>
-            <Button>Aceptar</Button>
+        <DialogFooter
+          className="flex w-full"
+          style={{ justifyContent: 'space-between' }}
+        >
+          {/* ✅ Logout button */}
+          <Button
+            variant="destructive"
+            onClick={async () => {
+              await signOut();
+            }}
+            disabled={loading}
+            className="gap-2"
+          >
+            <LogOut className="h-4 w-4" />
+            Cerrar sesión
+          </Button>
+
+          <DialogClose asChild>
+            <Button variant="secondary">Aceptar</Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>

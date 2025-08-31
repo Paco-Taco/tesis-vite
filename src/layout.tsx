@@ -5,9 +5,11 @@ import { SidebarProvider, SidebarTrigger } from './components/ui/sidebar';
 import { AccessibilityTab } from './components/shared/AccessibilityTab';
 import { SettingsDialog } from './components/navbar/SettingsDialog';
 import { useLocation } from 'react-router-dom';
+import { useAuth } from './context/authContext';
 
 export default function Layout({ children }: { children?: React.ReactNode }) {
   const location = useLocation();
+  const { user } = useAuth();
   const authPaths = ['/login', '/register'];
   const isAuthPage = authPaths.includes(location.pathname);
 
@@ -25,7 +27,9 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                 <Bell />
               </div> */}
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarImage
+                src={user.imageUrl ?? 'https://github.com/shadcn.png'}
+              />
               <AvatarFallback>UC</AvatarFallback>
             </Avatar>
           </div>

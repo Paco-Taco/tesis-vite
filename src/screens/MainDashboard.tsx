@@ -5,9 +5,12 @@ import { SimpleStatCard } from '@/components/home/SimpleStatCard';
 import { ConsumoDiario } from '@/types/consumoTypes';
 import { useAccessibility } from '@/context/accessibilityContext';
 import { ScreenTitle } from '../components/shared/ScreenTitle';
+import { useAuth } from '@/context/authContext';
+import { RangeIndicator } from '@/components/home/RangeIndicator';
+import { useTarifaStore } from '@/store/useTarifaStore';
 
 export const MainDashboard = () => {
-  const { isDark } = useAccessibility();
+  const { user } = useAuth();
 
   const [consumoDelDia, setConsumoDelDia] = useState<ConsumoDiario | null>(
     null
@@ -16,16 +19,7 @@ export const MainDashboard = () => {
     null
   );
   const [loading, setLoading] = useState(false);
-
-  // Inicializar datos de la gráfica desde localStorage
-  const initialData = () => {
-    const cached = localStorage.getItem('dataGraph');
-    return cached ? JSON.parse(cached) : { x: [], y: [] };
-  };
-
-  const [dataGraph, setDataGraph] = useState<{ x: string[]; y: number[] }>(
-    initialData
-  );
+  const { currentTarifa } = useTarifaStore();
 
   useEffect(() => {
     setLoading(true);
@@ -46,16 +40,6 @@ export const MainDashboard = () => {
       setConsumoDelDia(data);
       setHoraActualizacion(horaFormateada);
       setLoading(false);
-
-      // Agregar nuevo punto y mantener solo los últimos 5
-      setDataGraph((prev) => {
-        const updated = {
-          x: [...prev.x, horaFormateada].slice(-5),
-          y: [...prev.y, data.lectura].slice(-5),
-        };
-        localStorage.setItem('dataGraph', JSON.stringify(updated));
-        return updated;
-      });
     });
 
     return () => {
@@ -63,13 +47,6 @@ export const MainDashboard = () => {
       console.log('🔌 Desconectado del WebSocket');
     };
   }, []);
-
-  const [isDarkMode, setIsDarkMode] = useState(isDark);
-
-  useEffect(() => {
-    setIsDarkMode(isDark);
-    console.log(isDark);
-  }, [isDark]);
 
   const statCardsData = [
     {
@@ -99,7 +76,7 @@ export const MainDashboard = () => {
   if (loading || !consumoDelDia) {
     return (
       <div className="flex justify-center items-center h-[80%]">
-        <div className="flex-1 block justify-items-center">
+        <div className="flex-1 justify-items-center text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-black dark:border-white mb-6"></div>
           <span>Cargando Datos en Tiempo Real...</span>
         </div>
@@ -109,7 +86,7 @@ export const MainDashboard = () => {
 
   return (
     <div className="space-y-6">
-      <ScreenTitle label="Bienvenido, Francisco 👋" />
+      <ScreenTitle label={`Bienvenido, ${user.username} 👋`} />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {statCardsData.map((item, index) => (
@@ -123,9 +100,15 @@ export const MainDashboard = () => {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
         <div className="md:col-span-1">
           <GastoActual consumoDelDia={consumoDelDia} />
+        </div>
+        <div className="md:col-span-2">
+          <RangeIndicator
+            consumo={consumoDelDia.lectura ?? 0}
+            tarifaCode={currentTarifa}
+          />
         </div>
       </div>
     </div>

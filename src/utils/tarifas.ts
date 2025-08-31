@@ -17,3 +17,45 @@ export const precios = {
   CB: [8.59, 0.406, 0.417, 0.45, 0, 0.51],
   I: [8.59, 0.406, 0.417, 0.45, 0, 0.51],
 };
+
+// Range names in order: B, IL, IM, IH, H, S (excedente)
+export const RANGE_NAMES = [
+  'Básico',
+  'Intermedio bajo',
+  'Intermedio medio',
+  'Intermedio alto',
+  'Alto',
+  'Excedente',
+] as const;
+
+export type TarifaCode = keyof typeof tarifas;
+
+export function getCaps(tarifaCode: TarifaCode) {
+  const arr = tarifas[tarifaCode] ?? [];
+  // first 5 are finite caps
+  const caps = arr.slice(0, 5).map((n) => Math.max(0, n));
+  const totalCap = caps.reduce((a, b) => a + b, 0);
+  return { caps, totalCap };
+}
+
+export function getCurrentRange(consumo: number, tarifaCode: TarifaCode) {
+  const { caps, totalCap } = getCaps(tarifaCode);
+  let restante = Math.max(0, consumo);
+
+  // Walk the 5 finite blocks
+  for (let i = 0; i < caps.length; i++) {
+    const take = Math.min(restante, caps[i]);
+    if (restante <= caps[i]) {
+      return {
+        index: i, // 0..4 inside caps
+        name: RANGE_NAMES[i],
+        toNext: Math.max(0, caps[i] - restante), // how much left to next range
+        totalCap,
+      };
+    }
+    restante -= take;
+  }
+
+  // Excedente
+  return { index: 5, name: RANGE_NAMES[5], toNext: 0, totalCap };
+}

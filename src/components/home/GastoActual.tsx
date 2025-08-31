@@ -27,13 +27,13 @@ export const GastoActual = ({ consumoDelDia }: GastoActualTypes) => {
   );
 
   return (
-    <Card className="flex flex-col h-full">
+    <Card className="flex flex-col h-full min-h-[300px]">
       <CardHeader>
         <CardTitle>Gasto Actual</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-grow justify-center items-center py-6">
         <div
-          className="flex flex-col w-70 h-70 border-[14px] p-2 rounded-full items-center justify-center"
+          className="flex flex-col w-50 h-50 border-[14px] p-2 rounded-full items-center justify-center"
           style={{ borderColor: colorCirculo }}
         >
           <span className="text-lg font-regular text-gray-500">Total</span>

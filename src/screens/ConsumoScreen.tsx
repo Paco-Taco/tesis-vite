@@ -216,16 +216,15 @@ export const ConsumoScreen: React.FC = () => {
     };
   }, [todayData, monthData, month, year]);
 
-  // const monthLabel = useMemo(() => {
-  //   const m = MONTHS.find((x) => x.value === month)?.label ?? String(month);
-  //   return `${m} ${year}`;
-  // }, [month, year]);
-
-  // const yearOptions = useMemo(() => {
-  //   const now = new Date().getFullYear();
-  //   const start = now - 5;
-  //   return Array.from({ length: 7 }, (_, i) => start + i);
-  // }, []);
+  if (loadingMonth || loadingToday) {
+    return (
+      <div className="space-y-6">
+        <h1 className="text-2xl font-regular">Consumo</h1>
+        <div className="h-24 animate-pulse bg-muted/50 rounded-md" />
+        <div className="h-64 animate-pulse bg-muted/50 rounded-md" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

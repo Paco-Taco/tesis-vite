@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion } from 'framer-motion';
-import { Mail, Lock, Eye, EyeOff, Github, Chrome } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 
 /** shadcn/ui */
 import { Button } from '@/components/ui/button';
@@ -28,6 +28,7 @@ import { useCurrentLogo } from '@/hooks/useCurrentLogo';
 import { useAuth } from '@/context/authContext';
 import { toast } from 'sonner';
 import { getErrorMessage } from '@/utils/getErrorMessage';
+import { Navigate, useLocation } from 'react-router-dom';
 
 // Schema
 const FormSchema = z.object({
@@ -42,7 +43,8 @@ const FormSchema = z.object({
 type FormValues = z.infer<typeof FormSchema>;
 
 export default function LoginScreen() {
-  const { signIn } = useAuth();
+  const { signIn, isAuthenticated } = useAuth();
+  const location = useLocation();
   const { currentLogo } = useCurrentLogo();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -60,18 +62,18 @@ export default function LoginScreen() {
   async function onSubmit(values: FormValues) {
     setLoading(true);
     try {
-      // TODO: replace with your auth call
       await signIn(values);
-      console.log('Login payload', values);
     } catch (error) {
       const msg = getErrorMessage(error) ?? 'Error inesperado';
-      toast('Error al ingresar', {
+      toast.error('Error al ingresar', {
         description: msg,
       });
     } finally {
       setLoading(false);
     }
   }
+
+  if (isAuthenticated) return <Navigate to="/" replace />;
 
   return (
     <div className="min-h-screen grid lg:grid-cols-2 bg-gradient-to-br from-background to-muted/40">

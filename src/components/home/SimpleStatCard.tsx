@@ -8,7 +8,7 @@ interface StatCardProps {
   variationColor: string;
 }
 
-export const StatCard = ({
+export const SimpleStatCard = ({
   label,
   value,
   variation,

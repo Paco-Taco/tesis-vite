@@ -6,7 +6,14 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
+import {
+  Bar,
+  CartesianGrid,
+  ComposedChart,
+  Line,
+  XAxis,
+  YAxis,
+} from 'recharts';
 
 interface Props {
   data: {
@@ -26,7 +33,7 @@ interface Props {
 export const MonthlyConsumptionChart: React.FC<Props> = ({ data, config }) => {
   return (
     <ChartContainer config={config} className="aspect-auto h-[250px] w-full">
-      <BarChart
+      <ComposedChart
         data={data.days}
         accessibilityLayer
         margin={{ top: 20, right: 24, left: 0, bottom: 0 }}
@@ -57,7 +64,14 @@ export const MonthlyConsumptionChart: React.FC<Props> = ({ data, config }) => {
                     fill="var(--chart-2)"
                     radius={[0, 0, 4, 4]}
                   /> */}
-      </BarChart>
+
+        <Line
+          dataKey={'MA7'}
+          type="monotone"
+          stroke={`var(--chart-3)`}
+          strokeWidth={2}
+        />
+      </ComposedChart>
     </ChartContainer>
   );
 };

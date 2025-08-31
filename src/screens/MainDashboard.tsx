@@ -2,7 +2,7 @@ import Plot from 'react-plotly.js';
 import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import { GastoActual } from '@/components/home/GastoActual';
-import { StatCard } from '@/components/home/StatCard';
+import { SimpleStatCard } from '@/components/home/SimpleStatCard';
 import { ConsumoDiario } from '@/types/consumoTypes';
 import { ChartCard } from '@/components/shared/ChartCard';
 import { useAccessibility } from '@/context/accessibilityContext';
@@ -115,7 +115,7 @@ export const MainDashboard = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {statCardsData.map((item, index) => (
-          <StatCard
+          <SimpleStatCard
             key={index}
             label={item.label}
             value={item.value}

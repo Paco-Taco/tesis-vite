@@ -2,7 +2,6 @@ import { AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import { AppSidebar } from './components/app-sidebar';
 import { Avatar } from './components/ui/avatar';
 import { SidebarProvider, SidebarTrigger } from './components/ui/sidebar';
-import { Settings, Bell } from 'lucide-react';
 import { AccessibilityProvider } from './context/accessibilityContext';
 import { AccessibilityTab } from './components/shared/AccessibilityTab';
 import { SettingsDialog } from './components/navbar/SettingsDialog';
@@ -17,9 +16,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <SidebarTrigger />
             <div className="flex items-center gap-6">
               <SettingsDialog />
-              <div className="hover:bg-gray-100 hover:dark:bg-neutral-900 rounded-3xl p-2">
+              {/* <div className="hover:bg-gray-100 hover:dark:bg-neutral-900 rounded-3xl p-2">
                 <Bell />
-              </div>
+              </div> */}
               <Avatar>
                 <AvatarImage src="https://github.com/shadcn.png" />
                 <AvatarFallback>UC</AvatarFallback>

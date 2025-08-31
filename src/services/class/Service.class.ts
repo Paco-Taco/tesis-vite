@@ -12,4 +12,13 @@ export class Service {
       throw error;
     }
   }
+
+  protected static async fetchWithGET<TRes>(url: string): Promise<TRes> {
+    try {
+      const { data } = await apiCore.get<TRes>(url);
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
 }

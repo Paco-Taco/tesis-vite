@@ -8,8 +8,8 @@ import { ChartConfig } from '@/components/ui/chart';
 import { getHourlyChartData } from '@/utils/getHourlyChartData';
 import { getMonthlyChartData } from '@/utils/getMonthlyChartData';
 import { ChartErrorScreen } from '@/components/shared/error/ChartErrorScreen';
-import { TodaysConsumptionChart } from '@/components/forecast/consumption/TodaysConsumptionChart';
-import { MonthlyConsumptionChart } from '../components/forecast/consumption/MonthlyConsumptionChart';
+import { TodaysConsumptionChart } from '@/components/consumption/TodaysConsumptionChart';
+import { MonthlyConsumptionChart } from '../components/consumption/MonthlyConsumptionChart';
 import { Calendar } from '@/components/ui/calendar';
 import {
   Select,
@@ -61,6 +61,10 @@ interface MonthlyConsumptionResponse {
 
 function formatUnit(n: number) {
   return `${(n ?? 0).toFixed(2)} m³`;
+}
+
+function isToday(d: Date) {
+  return toISODate(d) === toISODate(new Date());
 }
 
 const MONTHS = [
@@ -163,8 +167,8 @@ export const ConsumoScreen: React.FC = () => {
 
   const hourlyChartConfig = {
     hour: { label: 'Hora' },
-    consumo: { label: 'Consumo' },
     cumulado: { label: 'Acumulado' },
+    consumo: { label: 'Consumo' },
   } satisfies ChartConfig;
 
   const monthlyChartConfig = {
@@ -262,7 +266,9 @@ export const ConsumoScreen: React.FC = () => {
           {/* KPIs for Day */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
             <StatCard
-              title="Total (hoy)"
+              title={`Total ${
+                isToday(selectedDay) ? '(hoy)' : toISODate(selectedDay)
+              }`}
               main={formatUnit(hourlyChart.total || 0)}
               sub={
                 peakHourToday ? (
@@ -314,7 +320,9 @@ export const ConsumoScreen: React.FC = () => {
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button variant="outline">
-                          {toISODate(selectedDay)}
+                          {isToday(selectedDay)
+                            ? `Hoy (${toISODate(selectedDay)})`
+                            : toISODate(selectedDay)}
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="flex justify-center items-center">
@@ -460,7 +468,7 @@ export const ConsumoScreen: React.FC = () => {
                   </p>
                   {monthData?.datos?.datos?.length ? (
                     <p className="text-xs text-muted-foreground">
-                      Picos en tooltip · Media móvil 7d
+                      Media móvil 7d
                     </p>
                   ) : null}
                 </div>
@@ -476,9 +484,7 @@ export const ConsumoScreen: React.FC = () => {
                       data={monthlyChart}
                     />
                     <p className="text-xs text-muted-foreground mt-3">
-                      Consejo: la línea muestra una media móvil de 7 días; los
-                      picos instantáneos (picoConsumo) están disponibles en el
-                      tooltip de cada barra.
+                      Consejo: la línea muestra una media móvil de 7 días.
                     </p>
                   </>
                 )}

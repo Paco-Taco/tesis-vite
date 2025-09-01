@@ -28,7 +28,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
               </div> */}
             <Avatar>
               <AvatarImage
-                src={user.imageUrl ?? 'https://github.com/shadcn.png'}
+                src={user?.imageUrl ?? 'https://github.com/shadcn.png'}
               />
               <AvatarFallback>UC</AvatarFallback>
             </Avatar>

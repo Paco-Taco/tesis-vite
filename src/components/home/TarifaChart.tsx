@@ -33,6 +33,7 @@ export const TarifaChart = () => (
         <XAxis dataKey="name" />
         <YAxis />
         <Bar dataKey="value" barSize={70} radius={[4, 4, 0, 0]}>
+          {/* @ts-ignore */}
           {data.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={colors[index]} />
           ))}

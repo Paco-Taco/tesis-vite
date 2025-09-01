@@ -7,9 +7,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Settings, LogOut } from 'lucide-react'; // ✅ NEW
+import { Settings, LogOut } from 'lucide-react';
 import { Button } from '../ui/button';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Input } from '../ui/input';
 import { Tarifa, useTarifaStore } from '@/store/useTarifaStore';
 import { useAuth } from '@/context/authContext';

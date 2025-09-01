@@ -2,7 +2,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '@/context/authContext';
 
 export default function PublicOnlyRoute() {
-  const { session } = useAuth();
+  const { isAuthenticated } = useAuth();
   // if (loading) return null;
-  return session ? <Navigate to="/" replace /> : <Outlet />;
+  return isAuthenticated ? <Navigate to="/" replace /> : <Outlet />;
 }

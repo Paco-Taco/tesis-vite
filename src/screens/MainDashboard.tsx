@@ -3,7 +3,6 @@ import io from 'socket.io-client';
 import { GastoActual } from '@/components/home/GastoActual';
 import { SimpleStatCard } from '@/components/home/SimpleStatCard';
 import { ConsumoDiario } from '@/types/consumoTypes';
-import { useAccessibility } from '@/context/accessibilityContext';
 import { ScreenTitle } from '../components/shared/ScreenTitle';
 import { useAuth } from '@/context/authContext';
 import { RangeIndicator } from '@/components/home/RangeIndicator';
@@ -86,7 +85,7 @@ export const MainDashboard = () => {
 
   return (
     <div className="space-y-6">
-      <ScreenTitle label={`Bienvenido, ${user.username} 👋`} />
+      <ScreenTitle label={`Bienvenido, ${user?.username ?? 'Usuario'} 👋`} />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {statCardsData.map((item, index) => (
@@ -109,6 +108,12 @@ export const MainDashboard = () => {
             consumo={consumoDelDia.lectura ?? 0}
             tarifaCode={currentTarifa}
           />
+        </div>
+
+        <div>
+          <span className="text-muted-foreground text-sm ">
+            Última actualización: {horaActualizacion}
+          </span>
         </div>
       </div>
     </div>

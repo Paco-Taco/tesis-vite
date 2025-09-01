@@ -28,7 +28,7 @@ import { useCurrentLogo } from '@/hooks/useCurrentLogo';
 import { useAuth } from '@/context/authContext';
 import { toast } from 'sonner';
 import { getErrorMessage } from '@/utils/getErrorMessage';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 // Schema
 const FormSchema = z.object({
@@ -44,7 +44,6 @@ type FormValues = z.infer<typeof FormSchema>;
 
 export default function LoginScreen() {
   const { signIn, isAuthenticated } = useAuth();
-  const location = useLocation();
   const { currentLogo } = useCurrentLogo();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);

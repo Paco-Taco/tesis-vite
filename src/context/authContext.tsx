@@ -16,7 +16,7 @@ import {
 
 interface AuthContextType {
   // user: User | null;
-  user: UserClass;
+  user: UserClass | null;
   accessToken: string | null;
   isAuthenticated: boolean;
   loading: boolean;

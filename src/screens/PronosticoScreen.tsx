@@ -89,7 +89,7 @@ export const PronosticoScreen = () => {
         ? yearF.consumoActual / yearF.estimadoTotalAnio
         : 0;
 
-    const monthLabel = monthF?.mes ?? '';
+    const monthLabel = monthF?.mes ?? MONTH_NAMES[new Date().getMonth()];
     const yearLabel = yearF?.anio ? String(yearF.anio) : '';
 
     return { monthProgress, yearProgress, monthLabel, yearLabel };

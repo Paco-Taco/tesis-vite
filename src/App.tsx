@@ -8,6 +8,7 @@ import { AuthProvider } from './context/authContext';
 import ProtectedRoute from './routes/ProtectedRoute';
 import PublicOnlyRoute from './routes/PublicOnlyRoute';
 import LayoutRoute from './routes/LayoutRoute';
+import SignUpScreen from './screens/SignUpScreen';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             {/* Public-only (no layout) */}
             <Route element={<PublicOnlyRoute />}>
               <Route path="/login" element={<LoginScreen />} />
+              <Route path="/sign-up" element={<SignUpScreen />} />
             </Route>
 
             {/* Protected (with layout) */}

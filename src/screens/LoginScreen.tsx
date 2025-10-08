@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import blurredBg from '@/assets/img/blurred-bg.jpg';
 
 /** shadcn/ui */
 import { Button } from '@/components/ui/button';
@@ -28,10 +29,11 @@ import { useCurrentLogo } from '@/hooks/useCurrentLogo';
 import { useAuth } from '@/context/authContext';
 import { toast } from 'sonner';
 import { getErrorMessage } from '@/utils/getErrorMessage';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { AccessibilityTab } from '@/components/shared/AccessibilityTab';
 
 // Schema
-const FormSchema = z.object({
+const LoginFormSchema = z.object({
   correo_institucional: z
     .string()
     .min(1, 'El correo es requerido')
@@ -40,7 +42,7 @@ const FormSchema = z.object({
   // remember: z.boolean().optional(),
 });
 
-type FormValues = z.infer<typeof FormSchema>;
+type FormValues = z.infer<typeof LoginFormSchema>;
 
 export default function LoginScreen() {
   const { signIn, isAuthenticated } = useAuth();
@@ -49,7 +51,7 @@ export default function LoginScreen() {
   const [loading, setLoading] = useState(false);
 
   const form = useForm<FormValues>({
-    resolver: zodResolver(FormSchema),
+    resolver: zodResolver(LoginFormSchema),
     defaultValues: {
       correo_institucional: '',
       password: '',
@@ -116,7 +118,12 @@ export default function LoginScreen() {
       </motion.aside>
 
       {/* Right side / Form */}
-      <main className="flex items-center justify-center p-6 md:p-10">
+      <main
+        className="flex items-center justify-center p-6 md:p-10 bg-cover"
+        style={{
+          background: `url(${blurredBg})`,
+        }}
+      >
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -240,14 +247,15 @@ export default function LoginScreen() {
             </CardContent>
 
             <CardFooter className="flex items-center justify-between text-sm text-muted-foreground">
-              <span>¿Problemas para acceder?</span>
-              <a href="#" className="text-primary hover:underline">
-                Contacta con soporte
-              </a>
+              <span>¿Aún no tienes una cuenta?</span>
+              <Link to="/sign-up" className="text-primary hover:underline">
+                Crea una
+              </Link>
             </CardFooter>
           </Card>
         </motion.div>
       </main>
+      <AccessibilityTab />
     </div>
   );
 }

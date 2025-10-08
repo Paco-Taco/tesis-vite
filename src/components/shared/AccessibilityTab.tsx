@@ -6,7 +6,6 @@ import {
   Type,
   SunMoon,
   LetterText,
-  Wand2,
   Undo2,
 } from 'lucide-react';
 
@@ -177,7 +176,7 @@ export const AccessibilityTab = () => {
                       className="justify-start gap-2"
                       onClick={() => applyPreset('reset')}
                     >
-                      <Undo2 className="h-4 w-4" /> Reset
+                      <Undo2 className="h-4 w-4" /> Restaurar
                     </Button>
                   </div>
 

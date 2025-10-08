@@ -335,7 +335,7 @@ export default function SignUpScreen() {
                     name="img"
                     render={() => (
                       <FormItem>
-                        <FormLabel>Imagen</FormLabel>
+                        <FormLabel>Foto de perfil</FormLabel>
                         <FormControl>
                           <Dropzone
                             accept={{ image: ['.png', '.jpg', '.jpeg'] }}
@@ -349,7 +349,7 @@ export default function SignUpScreen() {
                                   <Upload className="size-5" />
                                 </div>
                                 <p className="text-sm font-bold">
-                                  Sube tu imagen
+                                  Sube tu foto
                                 </p>
                                 <p className="text-xs text-gray-500">
                                   PNG, JPG o JPEG (máx. 5 MB)

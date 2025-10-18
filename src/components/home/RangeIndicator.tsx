@@ -10,7 +10,7 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { Info, Lightbulb, TriangleAlert } from 'lucide-react';
 
-const SEG_COLORS = [
+export const SEG_COLORS = [
   '#60D394',
   '#82a546',
   '#F7CB73',
@@ -23,12 +23,14 @@ interface RangeIndicatorProps {
   consumo: number;
   tarifaCode: TarifaCode;
   className?: string;
+  noExtraInfo?: boolean;
 }
 
 export const RangeIndicator: React.FC<RangeIndicatorProps> = ({
   consumo,
   tarifaCode,
   className,
+  noExtraInfo,
 }) => {
   const { caps, totalCap } = getCaps(tarifaCode);
   const { index, name, toNext } = getCurrentRange(consumo, tarifaCode);
@@ -151,49 +153,54 @@ export const RangeIndicator: React.FC<RangeIndicatorProps> = ({
           </span>
         </div>
 
-        {/* Legend */}
-        <div className="flex items-center gap-2 text-sm">
-          <span
-            className="inline-block h-3 w-3 rounded-sm"
-            style={{ backgroundColor: SEG_COLORS[index] }}
-          />
-          <span className={cn(index === 5 && 'text-destructive')}>
-            {index === 5
-              ? 'Consumo por encima del límite (excedente)'
-              : 'Consumo dentro del rango'}
-          </span>
-        </div>
+        {!noExtraInfo && (
+          <>
+            {/* Legend */}
+            <div className="flex items-center gap-2 text-sm">
+              <span
+                className="inline-block h-3 w-3 rounded-sm"
+                style={{ backgroundColor: SEG_COLORS[index] }}
+              />
+              <span className={cn(index === 5 && 'text-destructive')}>
+                {index === 5
+                  ? 'Consumo por encima del límite (excedente)'
+                  : 'Consumo dentro del rango'}
+              </span>
+            </div>
+            {/* --- Extra "spacey" info section --- */}
+            <div className="mt-6 space-y-2 text-sm">
+              <p className="text-muted-foreground">
+                <strong>Rango actual:</strong> {name}
+              </p>
+              <p className="text-muted-foreground">
+                <strong>Faltante para el siguiente rango:</strong>{' '}
+                {index < 5 ? `${toNext.toFixed(2)} m³` : 'N/A'}
+              </p>
+              <p className="text-muted-foreground">
+                Mantén tu consumo dentro del rango para evitar cargos
+                adicionales.
+              </p>
+            </div>
 
-        {/* --- Extra "spacey" info section --- */}
-        <div className="mt-6 space-y-2 text-sm">
-          <p className="text-muted-foreground">
-            <strong>Rango actual:</strong> {name}
-          </p>
-          <p className="text-muted-foreground">
-            <strong>Faltante para el siguiente rango:</strong>{' '}
-            {index < 5 ? `${toNext.toFixed(2)} m³` : 'N/A'}
-          </p>
-          <p className="text-muted-foreground">
-            Mantén tu consumo dentro del rango para evitar cargos adicionales.
-          </p>
-        </div>
-
-        {/* footer tip pinned to bottom */}
-        <div>
-          <Separator className="mb-5" />
-          <div className="flex items-start gap-2 text-sm text-muted-foreground">
-            <span
-              className={cn(
-                'mt-0.5',
-                tip.icon === 'warn' && 'text-destructive',
-                tip.icon === 'bulb' && 'text-yellow-600 dark:text-yellow-500'
-              )}
-            >
-              {renderIcon(tip.icon)}
-            </span>
-            <p className="leading-snug">{tip.text}</p>
-          </div>
-        </div>
+            {/* footer tip pinned to bottom */}
+            <div>
+              <Separator className="mb-5" />
+              <div className="flex items-start gap-2 text-sm text-muted-foreground">
+                <span
+                  className={cn(
+                    'mt-0.5',
+                    tip.icon === 'warn' && 'text-destructive',
+                    tip.icon === 'bulb' &&
+                      'text-yellow-600 dark:text-yellow-500'
+                  )}
+                >
+                  {renderIcon(tip.icon)}
+                </span>
+                <p className="leading-snug">{tip.text}</p>
+              </div>
+            </div>
+          </>
+        )}
       </CardContent>
     </Card>
   );

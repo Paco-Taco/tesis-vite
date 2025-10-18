@@ -30,6 +30,7 @@ import {
   MonthlyConsumptionResponse,
   TodaysConsumptionResponse,
 } from '@/infraestructure/interfaces/consumption.interfaces';
+import { Link } from 'react-router-dom';
 
 type MonthlyDay = {
   _id: string;
@@ -230,9 +231,11 @@ export const ConsumoScreen: React.FC = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <ScreenTitle label="Consumo" />
-        {/* <Button variant="outline" size="sm" onClick={() => window.print()}>
-          Imprimir Factura
-        </Button> */}
+        <Link to="/recibo">
+          <Button variant="outline" size="sm">
+            Simular Recibo
+          </Button>
+        </Link>
       </div>
 
       {/*  Focus switch  */}

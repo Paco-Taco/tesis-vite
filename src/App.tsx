@@ -9,6 +9,7 @@ import ProtectedRoute from './routes/ProtectedRoute';
 import PublicOnlyRoute from './routes/PublicOnlyRoute';
 import LayoutRoute from './routes/LayoutRoute';
 import SignUpScreen from './screens/SignUpScreen';
+import { ReciboScreen } from './screens/ReciboScreen';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/" element={<MainDashboard />} />
                 <Route path="/pronostico" element={<PronosticoScreen />} />
                 <Route path="/consumo" element={<ConsumoScreen />} />
+                <Route path="/recibo" element={<ReciboScreen />} />
               </Route>
             </Route>
 

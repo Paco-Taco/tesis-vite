@@ -7,6 +7,7 @@ import { ScreenTitle } from '../components/shared/ScreenTitle';
 import { useAuth } from '@/context/authContext';
 import { RangeIndicator } from '@/components/home/RangeIndicator';
 import { useTarifaStore } from '@/store/useTarifaStore';
+import { Spinner } from '@/components/ui/spinner';
 
 export const MainDashboard = () => {
   const { user } = useAuth();
@@ -51,7 +52,7 @@ export const MainDashboard = () => {
     {
       label: 'Agua consumida hoy',
       value: consumoDelDia ? `${consumoDelDia.lectura} m³` : 'Cargando...',
-      variation: '+2.6%',
+      // variation: '+2.6%',
       variationColor: 'text-green-500',
     },
     {
@@ -59,7 +60,7 @@ export const MainDashboard = () => {
       value: consumoDelDia
         ? `${(consumoDelDia.lectura ?? 0) + 4123} m³`
         : 'Cargando...',
-      variation: '+0.2%',
+      // variation: '+0.2%',
       variationColor: 'text-green-500',
     },
     {
@@ -67,18 +68,16 @@ export const MainDashboard = () => {
       value: consumoDelDia
         ? `${(consumoDelDia.lectura ?? 0) + 10123} m³`
         : 'Cargando...',
-      variation: '-0.1%',
+      // variation: '-0.1%',
       variationColor: 'text-red-500',
     },
   ];
 
   if (loading || !consumoDelDia) {
     return (
-      <div className="flex justify-center items-center h-[80%]">
-        <div className="flex-1 justify-items-center text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-black dark:border-white mb-6"></div>
-          <span>Cargando Datos en Tiempo Real...</span>
-        </div>
+      <div className="flex-1 flex flex-col items-center justify-center h-screen gap-4">
+        <Spinner className="size-8" />
+        <span>Cargando Datos en Tiempo Real...</span>
       </div>
     );
   }
@@ -93,7 +92,7 @@ export const MainDashboard = () => {
             key={index}
             label={item.label}
             value={item.value}
-            variation={item.variation}
+            // variation={item.variation}
             variationColor={item.variationColor}
           />
         ))}
